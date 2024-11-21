@@ -15,28 +15,28 @@ For the automated Force-Convergence generation approach, it is advisable to crea
 2. Software Commands:
 After selecting the desired ANSYS Mechanical version, prepend the following commands to downlaod the Python file from this Rescale Labs Github Repository and then install and configure the Python virtual environment with the required libraries.
 ```
-wget https://raw.githubusercontent.com/rescale-labs/Util_Ansys_Mech_Pressure_Plotter/main/contact_pressure_plot.py
+	wget https://raw.githubusercontent.com/rescale-labs/Util_Ansys_Mech_Pressure_Plotter/main/contact_pressure_plot.py
 	pip3 install --user virtualenv
 	python3 -m virtualenv $HOME/ansys
 	source $HOME/ansys/bin/activate
 	pip install pandas
 	pip install plotly
-  pip install kaleido
+  	pip install kaleido
 ```
 Setting up the Python virtual environment typically takes under a minute which minimizes impact on solution time.
 
 At the end of the default ANSYS Mechanical solve command, we will append "&" to background the solver and then repeatedly invoke the contact pressure plotting script every few 5 minutes. We capture the Linux process ID of the ANSYS solver and continue to rerun the plotting script as long as the ANSYS solver is still alive.
 
 ```
-export LICENSE_FEATURE=ansys
+	export LICENSE_FEATURE=ansys
 	#export LICENSE_FEATURE=meba
 	#export LICENSE_FEATURE=mech_1
 	#export LICENSE_FEATURE=mech_2
-ansys${ANSYSMECH_VERSION/./} -dis -b -mpi $ANS_MPI_VERS -np $RESCALE_CORES_PER_SLOT -machines $MACHINES -i *.dat -p $LICENSE_FEATURE &
-pid=$!
-while ps -p $pid &>/dev/null; do
-python contact_pressure_plot.py
-sleep 300
-done
-deactivate
+	ansys${ANSYSMECH_VERSION/./} -dis -b -mpi $ANS_MPI_VERS -np $RESCALE_CORES_PER_SLOT -machines $MACHINES -i *.dat -p $LICENSE_FEATURE &
+	pid=$!
+	while ps -p $pid &>/dev/null; do
+	python contact_pressure_plot.py
+	sleep 300
+	done
+	deactivate
 ```
