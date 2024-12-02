@@ -52,7 +52,7 @@ class MechPlotter():
         # First, lets check for the nlh file to get the user defined contact pair ids
         with open(file, "r") as f:
             file_lines = f.readlines()
-        data = {"contact_id": [], "max_contact_pressure": [], "step": []}
+        data = {"contact_id": [], "max_contact_pressure": [], "step": [], "iteration": []}
         iteration = 0
         step = 0
         for line in file_lines:
@@ -65,10 +65,10 @@ class MechPlotter():
             if "COLDATA " in line:
                 iteration_data = line.split()
                 iteration = iteration_data[iteration_data.index("ITERATION=\"") + 1].replace("\"","")
-                if int(iteration) != 0:
-                    step += 1
+                iteration = int(iteration)
+                step += 1
 
-            if "<" not in line and int(iteration) != 0:
+            if "<" not in line:
                 entry_data = line.split()
                 pair_id = int(entry_data[id_col_num])
                 if pair_id in id_array:
@@ -76,12 +76,26 @@ class MechPlotter():
                     pressure = float(entry_data[pres_col_num])
                     data["max_contact_pressure"].append(pressure)
                     data["step"].append(step)
+                    data["iteration"].append(iteration)
         df = pd.DataFrame(data)
         return df
+    
+    def filter_by_id(self, df, contact_id):
+        filtered_df = df[df["contact_id"] == contact_id].reset_index(drop=True)
+        prev_row = None
+        indices_to_drop = []
+        for idx, row in filtered_df.iterrows():
+            if idx > 0:
+                if (row["iteration"] != 0) and (prev_row["iteration"] == 0):
+                    indices_to_drop.append(idx-1)
+            prev_row = row
 
+        filtered_df = filtered_df.drop(indices_to_drop)
+        return filtered_df
+    
     def generate_plots(self, id_array, cleaned_data):
         for id in id_array:
-            id_subset = cleaned_data[cleaned_data["contact_id"] == id]
+            id_subset = self.filter_by_id(cleaned_data, id)
             fig = px.line(id_subset, x="step", y="max_contact_pressure", color="contact_id")
             fig.update_layout(xaxis_title="Iteration",
                               yaxis_title="Max Contact Pressure",
