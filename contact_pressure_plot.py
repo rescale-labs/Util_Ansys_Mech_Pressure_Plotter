@@ -90,7 +90,8 @@ class MechPlotter():
                     indices_to_drop.append(idx-1)
             prev_row = row
 
-        filtered_df = filtered_df.drop(indices_to_drop)
+        filtered_df = filtered_df.drop(indices_to_drop).reset_index(drop=True)
+        filtered_df["step"]= filtered_df.index + 1
         return filtered_df
     
     def generate_plots(self, id_array, cleaned_data):
