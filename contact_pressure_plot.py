@@ -100,6 +100,7 @@ class MechPlotter():
             fig = px.line(id_subset, x="step", y="max_contact_pressure", color="contact_id")
             fig.update_layout(xaxis_title="Iteration",
                               yaxis_title="Max Contact Pressure",
+                              legend={"title": f"Contact ID"},
                               title=f"Pair {id} Contact Pressure Plot")
             fig.write_image(f"pair_{id}_contact_pressure_plot.png")
 
