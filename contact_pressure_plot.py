@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import plotly.express as px
+from PIL import Image
 
 class MechPlotter():
     def __init__(self, name):
@@ -11,6 +12,7 @@ class MechPlotter():
                 ids = self.get_contact_pair_ids(files[0])
                 clean_data = self.prep_contact_pressure_df(ids, files[1])
                 self.generate_plots(ids, clean_data)
+                self.combine_plots()
 
     def get_cnd_file(self):
         cnd_file = None
@@ -104,6 +106,26 @@ class MechPlotter():
                               title=f"Pair {id} Contact Pressure Plot")
             fig.write_image(f"pair_{id}_contact_pressure_plot.png")
 
-
+    def combine_plots(self):
+        files = os.listdir(".")
+        png_files = [x for x in files if "pair" in x]
+        images = [Image.open(path) for path in png_files]
+        min_img_width = min(i.width for i in images)
+        total_height = 0
+        for i, img in enumerate(images):
+            if img.width > min_img_width:
+                images[i] = img.resize((min_img_width, 
+                                        int(img.height/img.width * min_img_width)), 
+                                        Image.ANTIALIAS)
+            total_height += images[i].height
+        img_merge = Image.new(images[0].mode, (min_img_width, total_height))
+        y = 0
+        for img in images:
+            img_merge.paste(img, (0,y))
+            y += img.height
+        img_merge.save("ContactPressures.png")
+        # Delete original images once the merged one has been created
+        for file in png_files:
+            os.remove(file)
 if __name__ == "__main__":
     MechPlotter("ContactPressurePlot")
