@@ -19,9 +19,7 @@ After selecting the desired ANSYS Mechanical version, prepend the following comm
 	pip3 install --user virtualenv
 	python3 -m virtualenv $HOME/ansys
 	source $HOME/ansys/bin/activate
-	pip install pandas
-	pip install plotly
-  	pip install kaleido
+	pip install pandas==1.1.5 Pillow==8.4.0 kaleido==0.2.1 plotly==5.18.0
 ```
 Setting up the Python virtual environment typically takes under a minute which minimizes impact on solution time.
 
