@@ -1,6 +1,8 @@
 # ANSYS Mechanical Contact Pair Pressure Plots
 
 <img width="748" alt="Screenshot 2024-11-21 at 2 29 45 PM" src="https://github.com/user-attachments/assets/141c3e4d-152d-42cf-bcea-839ec0390fd1">
+
+
 When running a non-linear ANSYS Mechanical simulation with contact pairs defined. The solver generates a value for the maximum pressure at each step of the simulation. This tool can be used during batch simulations to generate plots of the max pressure per iteration as PNG files, which can then be easily viewed during the course of the simulation to effectively monitor the status of the analysis.
 
 # Working
