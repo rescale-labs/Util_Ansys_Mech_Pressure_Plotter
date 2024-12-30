@@ -40,3 +40,6 @@ At the end of the default ANSYS Mechanical solve command, we will append "&" to 
 	done
 	deactivate
 ```
+The final commands will look like this:
+
+<img width="1459" alt="Screenshot 2024-12-30 at 10 36 42 AM" src="https://github.com/user-attachments/assets/0cc4e395-009c-445c-a7d8-9748270b5b9b" />
