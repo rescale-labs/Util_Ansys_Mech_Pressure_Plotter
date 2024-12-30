@@ -25,7 +25,7 @@ After selecting the desired ANSYS Mechanical version, prepend the following comm
 ```
 Setting up the Python virtual environment typically takes under a minute which minimizes impact on solution time.
 
-At the end of the default ANSYS Mechanical solve command, we will append "&" to background the solver and then repeatedly invoke the contact pressure plotting script every few 5 minutes. We capture the Linux process ID of the ANSYS solver and continue to rerun the plotting script as long as the ANSYS solver is still alive.
+At the end of the default ANSYS Mechanical solve command, we will append "&" to background the solver and then repeatedly invoke the contact pressure plotting script every few minutes. We capture the Linux process ID of the ANSYS solver and continue to rerun the plotting script as long as the ANSYS solver is still alive.
 
 ```
 	export LICENSE_FEATURE=ansys
