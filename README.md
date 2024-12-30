@@ -15,7 +15,7 @@ Users can then search for the "png" extension from the Rescale livetailing menu 
 1. Create a template:
 For the automated Force-Convergence generation approach, it is advisable to create and save a template with the specified settings. This ensures that the template can be reused without manual command editing for each run.
 2. Software Commands:
-After selecting the desired ANSYS Mechanical version, prepend the following commands to downlaod the Python file from this Rescale Labs Github Repository and then install and configure the Python virtual environment with the required libraries.
+After selecting the desired ANSYS Mechanical version, prepend the following commands to download the Python file from this Rescale Labs Github Repository and then install and configure the Python virtual environment with the required libraries.
 ```
 	wget https://raw.githubusercontent.com/rescale-labs/Util_Ansys_Mech_Pressure_Plotter/main/contact_pressure_plot.py
 	pip3 install --user virtualenv
